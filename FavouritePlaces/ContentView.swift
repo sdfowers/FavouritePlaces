@@ -8,19 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var ctx                        //Get passed persistence handler (ph) into ctx
+    @FetchRequest(entity: Place.entity(), sortDescriptors: [])
+    var places:FetchedResults<Place>
+    
+    @State var name = ""
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView() {
+            VStack {
+                Text("Input Place Name")
+                TextField("Place Name", text: $name)
+                Button("Add new Place") {
+                    addNewPlace()
+                    name = ""
+                }
+                List {
+                    ForEach(places) {
+                        place in
+                        Text(place.name ?? "")
+                    }
+                }
+            }
+            .padding()
+            .navigationTitle("My Places")
         }
-        .padding()
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    func addNewPlace() {
+        if name == "" {return}
+        let place = Place(context: ctx)
+        place.name = name
+        saveData()
     }
 }

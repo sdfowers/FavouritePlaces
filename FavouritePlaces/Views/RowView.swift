@@ -13,7 +13,7 @@ struct RowView: View {
     
     var body: some View {
         HStack {
-            image.frame(width: 40, height: 40).clipShape(Circle())
+            image.frame(width: 40, height: 40).cornerRadius(5)
             Text(place.strName)
         }
         .task {

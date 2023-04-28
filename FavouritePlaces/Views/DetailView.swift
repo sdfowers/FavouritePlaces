@@ -14,58 +14,70 @@ struct DetailView: View {
     @State var name = ""
     @State var details = ""
     @State var imageURL = ""
-    @State var lattitude = 0.0
-    @State var longitude = 0.0
+    @State var lattitude = ""
+    @State var longitude = ""
     @State var isEditing = false
     @State var image = defaultImage
-    
     var body: some View {
         VStack {
             if !isEditing {
                 List {
-                    Text("Name: \(name)")
-                    Text("Image URL: \(imageURL)").scaledToFit().frame(height: 30)
-                    image.scaledToFit().cornerRadius(20).shadow(radius: 20)
-                    Text("Details: \(details)")
+                    Text("\(name)").multilineTextAlignment(.center).padding(.horizontal, 120.0).frame(alignment: .center)
+                    image.scaledToFit().cornerRadius(10)
+                    Text("\(details)")
+                        .lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/)
+                    Text("Lattitude: \(lattitude)")
+                    Text("Longitude: \(longitude)")
                 }
             } else {
                 List {
                     HStack {
                         Text("Name: ")
-                        TextField("Name: ", text: $name)
-                        
-                    }
-                    HStack {
-                        Text("ImageURL:")
-                        TextField("Image URL: ", text: $imageURL)
+                        TextField("place name", text: $name)
                     }
                     
-                    TextField("Details: ", text: $details)
-                }
-            }
-            HStack {
-                Button("\(isEditing ? "Confirm" : "Edit")") {
-                    if(isEditing) {
-                        place.strName = name
-                        place.strDetails = details
-                        place.strURL = imageURL
-                        place.longitude = longitude
-                        place.lattitude = lattitude
-                        saveData()
-                        Task {
-                            image = await place.getImage()
-                        }
+                    HStack {
+                        Text("ImageURL: ")
+                        TextField("enter an image url", text: $imageURL)
                     }
-                    isEditing.toggle()
+                    HStack {
+                        Text("Details: ")
+                        TextField("Describe the place", text: $details)
+                    }
+                    HStack {
+                        Text("Lattitude: ")
+                        TextField("0.0", text: $lattitude)
+                    }
+                    HStack {
+                        Text("Longitude: ")
+                        TextField("0.0", text: $longitude)
+                    }
+                    
                 }
             }
         }
+        .navigationBarItems(
+            trailing: Button("\(isEditing ? "Confirm" : "Edit")") {
+            if(isEditing) {
+                place.strName = name
+                place.strDetails = details
+                place.strURL = imageURL
+                place.strLongitude = longitude
+                place.strLattitude = lattitude
+                saveData()
+                Task {
+                    image = await place.getImage()
+                }
+            }
+            isEditing.toggle()
+            }
+        )
         .onAppear {
             name = place.strName
             details = place.strDetails
             imageURL = place.strURL
-            longitude = place.longitude
-            lattitude = place.lattitude
+            longitude = place.strLongitude
+            lattitude = place.strLattitude
         }
         .task {
             await image = place.getImage()

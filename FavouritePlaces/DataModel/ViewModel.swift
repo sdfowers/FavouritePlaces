@@ -15,7 +15,7 @@ var downloadImages:[URL:Image] = [:]
 extension Place {
     var strName:String {
         get {
-            self.name ?? "unknown"
+            self.name ?? "New Place"
         }
         set {
             self.name = newValue
@@ -23,7 +23,7 @@ extension Place {
     }
     var strDetails:String {
         get {
-            self.details ?? "unknown"
+            self.details ?? ""
         }
         set {
             self.details = newValue

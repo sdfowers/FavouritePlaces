@@ -17,18 +17,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView() {
             VStack {
-                Text("Input Place Name")
-                TextField("Place Name", text: $name).border(.blue)
-                HStack {
-                    Button("Add new Place") {
-                        addNewPlace()
-                        name = ""
-                    }
-                    Spacer()
-                    NavigationLink("Search") {
-                        SearchView(name: name)
-                    }
-                }
                 List {
                     ForEach(places) {
                         place in
@@ -42,13 +30,15 @@ struct ContentView: View {
             }
             .padding()
             .navigationTitle("My Favourite Places")
+            .navigationBarItems(leading: Button(action: addNewPlace) {Label("", systemImage: "plus")},
+                                trailing: EditButton())
         }
     }
     
+    
     func addNewPlace() {
-        if name == "" {return}
         let place = Place(context: ctx)
-        place.name = name
+        place.name = "New Place"
         saveData()
     }
     
@@ -58,4 +48,12 @@ struct ContentView: View {
         }
         saveData()
     }
+    /*
+    func addPlaceplus.square() {
+        if name == "" {return}
+        let place = Place(context: ctx)
+        place.name = name
+        saveData()
+    }
+    */
 }

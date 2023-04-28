@@ -8,8 +8,8 @@
 import Foundation
 import CoreData
 
-struct PH {
-    static let shared = PH()
+struct PersistanceHandler {
+    static let shared = PersistanceHandler()
     let container : NSPersistentContainer
     
     init() {
@@ -22,11 +22,4 @@ struct PH {
     }
 }
 
-func saveData() {
-    let ctx = PH.shared.container.viewContext
-    do {
-        try ctx.save()
-    } catch {
-        fatalError("Save error with \(error)")
-    }
-}
+

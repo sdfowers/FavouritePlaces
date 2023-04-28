@@ -32,7 +32,9 @@ struct ContentView: View {
                 List {
                     ForEach(places) {
                         place in
-                        Text(place.name ?? "")
+                        NavigationLink(destination: DetailView(place: place)) {
+                            RowView(place: place)
+                        }
                     }.onDelete{ idx in
                         deletePlace(idx)
                     }

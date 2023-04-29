@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var ctx                        //Get passed persistence handler (ph) into ctx
+    @Environment(\.managedObjectContext) var ctx                        //Get persistence handler into ctx
     @FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
     var places:FetchedResults<Place>
-    
     @State var name = ""
-    
+    @State var title = "My Favourite Places"
     var body: some View {
         NavigationView() {
             VStack {
@@ -21,20 +20,22 @@ struct ContentView: View {
                     ForEach(places) {
                         place in
                         NavigationLink(destination: DetailView(place: place)) {
-                            RowView(place: place)
+                                RowView(place: place)
                         }
+                        .listRowBackground(Color.gray.opacity(0.05))
                     }.onDelete{ idx in
                         deletePlace(idx)
                     }
                 }
             }
             .padding()
-            .navigationTitle("My Favourite Places")
-            .navigationBarItems(leading: Button(action: addNewPlace) {Label("", systemImage: "plus")},
-                                trailing: EditButton())
+            .navigationTitle(title)
+            .navigationBarItems(
+                leading: Button(action: addNewPlace) {Label("", systemImage: "plus")},
+                trailing: EditButton()
+            )
         }
     }
-    
     
     func addNewPlace() {
         let place = Place(context: ctx)

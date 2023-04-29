@@ -22,40 +22,47 @@ struct DetailView: View {
         VStack {
             if !isEditing {
                 List {
-                    Text("\(name)").multilineTextAlignment(.center).padding(.horizontal, 120.0).frame(alignment: .center)
-                    image.scaledToFit().cornerRadius(10)
-                    Text("\(details)")
-                        .lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/)
-                    Text("Lattitude: \(lattitude)")
-                    Text("Longitude: \(longitude)")
+                    Text("\(name)").listRowBackground(Color.gray.opacity(0.05))
+                    image.scaledToFit().cornerRadius(10).listRowBackground(Color.gray.opacity(0.05))
+                    Text("\(details)").lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/).listRowBackground(Color.gray.opacity(0.05))
+                    Text("Lattitude: \(lattitude)").listRowBackground(Color.gray.opacity(0.05))
+                    Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))
                 }
             } else {
                 List {
                     HStack {
-                        Text("Name: ")
+                        Label("Name:", systemImage: "map")
                         TextField("place name", text: $name)
-                    }
+                            .foregroundColor(Color.black.opacity(0.75))
+                    }.listRowBackground(Color.gray.opacity(0.05))
                     
                     HStack {
-                        Text("ImageURL: ")
+                        Label("Image URL:", systemImage: "photo")
                         TextField("enter an image url", text: $imageURL)
-                    }
-                    HStack {
-                        Text("Details: ")
-                        TextField("Describe the place", text: $details)
-                    }
-                    HStack {
-                        Text("Lattitude: ")
-                        TextField("0.0", text: $lattitude)
-                    }
-                    HStack {
-                        Text("Longitude: ")
-                        TextField("0.0", text: $longitude)
-                    }
+                            .foregroundColor(Color.black.opacity(0.75))
+                    }.listRowBackground(Color.gray.opacity(0.05))
                     
+                    HStack {
+                        Label("Details:", systemImage: "doc.plaintext")
+                        TextField("Describe the place", text: $details)
+                            .foregroundColor(Color.black.opacity(0.75))
+                    }.listRowBackground(Color.gray.opacity(0.05))
+                    
+                    HStack {
+                        Label("Lattitude:", systemImage: "mappin")
+                        TextField("0.0", text: $lattitude)
+                            .foregroundColor(Color.black.opacity(0.75))
+                    }.listRowBackground(Color.gray.opacity(0.05))
+                    
+                    HStack {
+                        Label("Longitude:", systemImage: "mappin")
+                        TextField("0.0", text: $longitude)
+                            .foregroundColor(Color.black.opacity(0.75))
+                    }.listRowBackground(Color.gray.opacity(0.05))
                 }
             }
         }
+        .navigationTitle(name)
         .navigationBarItems(
             trailing: Button("\(isEditing ? "Confirm" : "Edit")") {
             if(isEditing) {
@@ -78,6 +85,9 @@ struct DetailView: View {
             imageURL = place.strURL
             longitude = place.strLongitude
             lattitude = place.strLattitude
+        }
+        .onDisappear {
+            saveData()
         }
         .task {
             await image = place.getImage()

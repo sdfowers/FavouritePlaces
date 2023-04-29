@@ -36,13 +36,11 @@ struct ContentView: View {
             )
         }
     }
-    
     func addNewPlace() {
         let place = Place(context: ctx)
         place.name = "New Place"
         saveData()
     }
-    
     func deletePlace(_ idx: IndexSet) {
         idx.map{places[$0]}.forEach { place in
             ctx.delete(place)
@@ -55,6 +53,5 @@ struct ContentView: View {
         let place = Place(context: ctx)
         place.name = name
         saveData()
-    }
-    */
+    }*/
 }

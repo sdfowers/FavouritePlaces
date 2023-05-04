@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480B95D82A0355C70033F00C /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B95D72A0355C70033F00C /* MapModel.swift */; };
+		480B95D92A0355C70033F00C /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B95D72A0355C70033F00C /* MapModel.swift */; };
 		484AEACA29FBDCB500F17A13 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484AEAC929FBDCB500F17A13 /* DetailView.swift */; };
 		484AEACB29FBDCB500F17A13 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484AEAC929FBDCB500F17A13 /* DetailView.swift */; };
 		484AEACD29FBE57E00F17A13 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484AEACC29FBE57E00F17A13 /* ViewModel.swift */; };
@@ -46,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480B95D72A0355C70033F00C /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
 		4836073B29FCEA8A00B7404E /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		484AEAC929FBDCB500F17A13 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		484AEACC29FBE57E00F17A13 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -106,6 +109,7 @@
 			children = (
 				48A147CF29F9629600C172E8 /* Persistence.swift */,
 				484AEACC29FBE57E00F17A13 /* ViewModel.swift */,
+				480B95D72A0355C70033F00C /* MapModel.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -300,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48A147D729F96CAB00C172E8 /* SearchView.swift in Sources */,
+				480B95D82A0355C70033F00C /* MapModel.swift in Sources */,
 				484AEACA29FBDCB500F17A13 /* DetailView.swift in Sources */,
 				48A147A129F9616C00C172E8 /* ContentView.swift in Sources */,
 				484AEAD129FBEC2E00F17A13 /* RowView.swift in Sources */,
@@ -314,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				480B95D92A0355C70033F00C /* MapModel.swift in Sources */,
 				48A147D829F96CAB00C172E8 /* SearchView.swift in Sources */,
 				48A147D129F9629600C172E8 /* Persistence.swift in Sources */,
 				484AEAD229FBEC2E00F17A13 /* RowView.swift in Sources */,

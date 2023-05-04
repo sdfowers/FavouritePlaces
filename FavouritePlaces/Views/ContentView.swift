@@ -11,7 +11,7 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var ctx                        //Get persistence handler into ctx
     @FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
     var places:FetchedResults<Place>
-    @State var name = ""
+    //@State var name = ""
     @State var title = "My Favourite Places"
     var body: some View {
         NavigationView() {
@@ -36,6 +36,7 @@ struct ContentView: View {
             )
         }
     }
+    
     func addNewPlace() {
         let place = Place(context: ctx)
         place.name = "New Place"

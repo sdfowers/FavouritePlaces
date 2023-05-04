@@ -86,9 +86,10 @@ struct DetailView: View {
             longitude = place.strLongitude
             lattitude = place.strLattitude
         }
+        /*
         .onDisappear {
             saveData()
-        }
+        } */
         .task {
             await image = place.getImage()
         }

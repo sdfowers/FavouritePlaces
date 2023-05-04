@@ -72,6 +72,7 @@ extension Place {
         
         return defaultImage
     }
+    
 }
 
 func saveData() {

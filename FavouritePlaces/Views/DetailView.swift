@@ -10,7 +10,7 @@ import CoreData
 
 struct DetailView: View {
     //@Environment(\.managedObjectContext) var ctx
-    var place:Place
+    @ObservedObject var place:Place
     @State var name = ""
     @State var details = ""
     @State var imageURL = ""
@@ -24,6 +24,9 @@ struct DetailView: View {
                 List {
                     Text("\(name)").listRowBackground(Color.gray.opacity(0.05))
                     image.scaledToFit().cornerRadius(10).listRowBackground(Color.gray.opacity(0.05))
+                    NavigationLink(destination: MapView(place: place)) {
+                        Text("Map of \(name)")
+                    }.listRowBackground(Color.gray.opacity(0.05))
                     Text("\(details)").lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/).listRowBackground(Color.gray.opacity(0.05))
                     Text("Lattitude: \(lattitude)").listRowBackground(Color.gray.opacity(0.05))
                     Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var ctx                        //Get persistence handler into ctx
@@ -34,6 +35,16 @@ struct ContentView: View {
                 leading: Button(action: addNewPlace) {Label("", systemImage: "plus")},
                 trailing: EditButton()
             )
+            .onAppear {
+                /*
+                do {
+                    saveData()
+                    try ctx.fetch(FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]))
+                } catch {
+                    print(error.localizedDescription)
+                }
+                */
+            }
         }
     }
     

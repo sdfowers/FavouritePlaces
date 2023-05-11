@@ -8,15 +8,19 @@
 import Foundation
 import MapKit
 
-var lattitude = 0.0
-var longitude = 0.0
-var rangeMeter = 10_000.00
-
 class MapModel: ObservableObject {
+    @Published var lattitude = 0.0
+    @Published var longitude = 0.0
+    @Published var delta = 100.00
     @Published var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: lattitude, longitude: longitude),
-        latitudinalMeters: rangeMeter,
-        longitudinalMeters: rangeMeter
+        center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
+        span: MKCoordinateSpan(latitudeDelta: 100.0, longitudeDelta: 100.0)
     )
+    
+    static let shared = MapModel()
+    
+    init() {
+        
+    }
     
 }

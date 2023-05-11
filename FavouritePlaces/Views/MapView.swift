@@ -19,7 +19,7 @@ struct MapView: View {
         VStack (alignment: .leading) {
             HStack {
                 Text("Address")
-                TextField("Address", text: $place.strName)
+                TextField("Address", text: $map.name)
                 Image(systemName: "magnifyingglass").foregroundColor(.blue)
                     .onTapGesture {
                         checkAddress()
@@ -39,20 +39,55 @@ struct MapView: View {
                     checkZoom()
                 }
             }
-            Map(coordinateRegion: $map.region)
+            ZStack {
+                Map(coordinateRegion: $map.region)
+                VStack(alignment: .leading) {
+                    Text("Latitude:\(map.region.center.latitude)").font(.footnote)
+                    Text("Longitude:\(map.region.center.longitude)").font(.footnote)
+                    Button("Update") {
+                        checkMap()
+                    }
+                }.offset(x: 10, y: 250)
+            }
+        }
+        .task {
+            checkMap()
         }
         .onAppear {
-            map.lattitude = place.lattitude
+            map.latitude = place.lattitude
             map.longitude = place.longitude
         }
     }
     func checkAddress() {
-        
+        map.fromAddressToLocationOld(updateViewLocation)
+        /*
+        Task {
+            await map.fromAddressToLocation()
+            latitude = map.latStr
+            longitude = map.longStr
+        }
+        */
     }
     func checkLocation() {
-        
+        map.longStr = longitude
+        map.latStr = latitude
+        map.fromLocationToAddress()
+        map.setupRegion()
     }
     func checkZoom() {
+        checkMap()
+        map.fromZoomToDelta(zoom)
         
+        map.setupRegion()
+    }
+    func checkMap() {
+        map.updateFromRegion()
+        latitude = map.latStr
+        longitude = map.longStr
+        map.fromLocationToAddress()
+    }
+    func updateViewLocation() {
+        latitude = map.latStr
+        longitude = map.longStr
     }
 }

@@ -9,7 +9,8 @@ import Foundation
 import MapKit
 
 class MapModel: ObservableObject {
-    @Published var lattitude = 0.0
+    @Published var name = ""
+    @Published var latitude = 0.0
     @Published var longitude = 0.0
     @Published var delta = 100.00
     @Published var region = MKCoordinateRegion(
@@ -22,5 +23,6 @@ class MapModel: ObservableObject {
     init() {
         
     }
+    
     
 }

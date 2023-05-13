@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 
 class MapModel: ObservableObject {
-    @Published var name = ""
+    @Published var address = ""
     @Published var latitude = 0.0
     @Published var longitude = 0.0
     @Published var delta = 100.00

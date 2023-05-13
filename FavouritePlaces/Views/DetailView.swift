@@ -13,8 +13,9 @@ struct DetailView: View {
     @ObservedObject var place:Place
     @State var name = ""
     @State var details = ""
+    @State var address = ""
     @State var imageURL = ""
-    @State var lattitude = ""
+    @State var latitude = ""
     @State var longitude = ""
     @State var isEditing = false
     @State var image = defaultImage
@@ -27,8 +28,9 @@ struct DetailView: View {
                     NavigationLink(destination: MapView(place: place)) {
                         Text("Map of \(name)")
                     }.listRowBackground(Color.gray.opacity(0.05))
+                    Text("\(address)").listRowBackground(Color.gray.opacity(0.05))
                     Text("\(details)").lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/).listRowBackground(Color.gray.opacity(0.05))
-                    Text("Lattitude: \(lattitude)").listRowBackground(Color.gray.opacity(0.05))
+                    Text("Lattitude: \(latitude)").listRowBackground(Color.gray.opacity(0.05))
                     Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))
                 }
             } else {
@@ -46,6 +48,12 @@ struct DetailView: View {
                     }.listRowBackground(Color.gray.opacity(0.05))
                     
                     HStack {
+                        Label("Address:", systemImage: "doc.plaintext")
+                        TextField("1 place street", text: $address)
+                            .foregroundColor(Color.black.opacity(0.75))
+                    }.listRowBackground(Color.gray.opacity(0.05))
+                    
+                    HStack {
                         Label("Details:", systemImage: "doc.plaintext")
                         TextField("Describe the place", text: $details)
                             .foregroundColor(Color.black.opacity(0.75))
@@ -53,7 +61,7 @@ struct DetailView: View {
                     
                     HStack {
                         Label("Lattitude:", systemImage: "mappin")
-                        TextField("0.0", text: $lattitude)
+                        TextField("0.0", text: $latitude)
                             .foregroundColor(Color.black.opacity(0.75))
                     }.listRowBackground(Color.gray.opacity(0.05))
                     
@@ -71,9 +79,10 @@ struct DetailView: View {
             if(isEditing) {
                 place.strName = name
                 place.strDetails = details
+                place.strAddress = address
                 place.strURL = imageURL
                 place.strLongitude = longitude
-                place.strLattitude = lattitude
+                place.strLatitude = latitude
                 saveData()
                 Task {
                     image = await place.getImage()
@@ -85,9 +94,10 @@ struct DetailView: View {
         .onAppear {
             name = place.strName
             details = place.strDetails
+            address = place.strAddress
             imageURL = place.strURL
             longitude = place.strLongitude
-            lattitude = place.strLattitude
+            latitude = place.strLatitude
         }
         /*
         .onDisappear {

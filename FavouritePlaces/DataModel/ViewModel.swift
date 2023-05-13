@@ -29,13 +29,21 @@ extension Place {
             self.details = newValue
         }
     }
-    var strLattitude:String {
+    var strAddress:String {
         get {
-            "\(self.lattitude)"
+            self.address ?? ""
         }
         set {
-            guard let lattitude = Double(newValue) else {return}
-            self.lattitude = lattitude
+            self.address = newValue
+        }
+    }
+    var strLatitude:String {
+        get {
+            "\(self.latitude)"
+        }
+        set {
+            guard let latitude = Double(newValue) else {return}
+            self.latitude = latitude
         }
     }
     var strLongitude:String {

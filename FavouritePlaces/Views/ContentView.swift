@@ -10,8 +10,7 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var ctx                        //Get persistence handler into ctx
-    @FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)])
-    var places:FetchedResults<Place>
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var places:FetchedResults<Place>
     //@State var name = ""
     @State var title = "My Favourite Places"
     var body: some View {
@@ -36,14 +35,7 @@ struct ContentView: View {
                 trailing: EditButton()
             )
             .onAppear {
-                /*
-                do {
-                    saveData()
-                    try ctx.fetch(FetchRequest(entity: Place.entity(), sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]))
-                } catch {
-                    print(error.localizedDescription)
-                }
-                */
+                
             }
         }
     }

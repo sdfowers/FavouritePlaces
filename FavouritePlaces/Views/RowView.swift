@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RowView: View {
-    var place:Place
+    @ObservedObject var place:Place
     @State var image = defaultImage
     
     var body: some View {

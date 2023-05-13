@@ -49,13 +49,13 @@ extension MapModel {
                 return
             }
             let mark = marks?.first
-            let name = mark?.name ?? mark?.country ?? mark?.locality ?? mark?.administrativeArea ?? "No Name"
-            self.name = name
+            let name = mark?.name ?? mark?.country ?? mark?.locality ?? mark?.administrativeArea ?? "No Address"
+            self.address = name
         }
     }
     func fromAddressToLocation () async {
         let encode = CLGeocoder()
-        let marks = try? await encode.geocodeAddressString(self.name)
+        let marks = try? await encode.geocodeAddressString(self.address)
         
         if let mark = marks?.first {
             self.latitude = mark.location?.coordinate.latitude ?? self.latitude
@@ -66,7 +66,7 @@ extension MapModel {
     
     func fromAddressToLocationOld(_ callback: @escaping () -> Void) {
         let encode = CLGeocoder()
-        encode.geocodeAddressString(self.name) {
+        encode.geocodeAddressString(self.address) {
             marks, error in
             if let err = error {
                 print("Error in fromAddressToLocation: \(err)")

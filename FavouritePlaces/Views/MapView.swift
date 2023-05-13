@@ -12,27 +12,38 @@ struct MapView: View {
     @ObservedObject var place: Place
     @ObservedObject var map: MapModel = .shared
     @State var zoom = 10.0
+    @State var address = ""
     @State var latitude = "0.0"
     @State var longitude = "0.0"
-    
+    @State var isEditing = false
     var body: some View {
         VStack (alignment: .leading) {
             HStack {
                 Text("Address")
-                TextField("Address", text: $map.name)
-                Image(systemName: "magnifyingglass").foregroundColor(.blue)
-                    .onTapGesture {
-                        checkAddress()
-                    }
+                if !isEditing {
+                    Text(address)
+                } else {
+                    TextField("Address", text: $address)
+                    Image(systemName: "magnifyingglass").foregroundColor(.blue)
+                        .onTapGesture {
+                            checkAddress()
+                        }
+                }
             }
             HStack {
-                Text("Lat/Long")
-                TextField("Lat:", text: $latitude)
-                TextField("Long:", text: $longitude)
-                Image(systemName: "sparkle.magnifyingglass").foregroundColor(.blue)
-                    .onTapGesture {
-                        checkLocation()
-                    }
+                if !isEditing {
+                    Text("Lat: \(latitude)")
+                    Text("Long: \(longitude)")
+                } else {
+                    Text("Lat:")
+                    TextField("Latitude:", text: $latitude)
+                    Text("Long:")
+                    TextField("Longitude:", text: $longitude)
+                    Image(systemName: "sparkle.magnifyingglass").foregroundColor(.blue)
+                        .onTapGesture {
+                            checkLocation()
+                        }
+                }
             }
             Slider(value: $zoom, in: 10...60) {
                 if !$0 {
@@ -50,15 +61,31 @@ struct MapView: View {
                 }.offset(x: 10, y: 250)
             }
         }
+        .navigationTitle(place.strName)
+        .navigationBarItems(
+            trailing: Button("\(isEditing ? "Confirm" : "Edit")") {
+            if(isEditing) {
+                place.longitude = map.longitude
+                place.latitude = map.latitude
+                place.address = map.address
+                saveData()
+            }
+            isEditing.toggle()
+            }
+        )
         .task {
             checkMap()
         }
         .onAppear {
-            map.latitude = place.lattitude
+            map.latitude = place.latitude
             map.longitude = place.longitude
+            map.address = place.strAddress
+            address = place.strAddress
+            checkAddress()
         }
     }
     func checkAddress() {
+        map.address = address
         map.fromAddressToLocationOld(updateViewLocation)
         /*
         Task {
@@ -82,6 +109,7 @@ struct MapView: View {
     }
     func checkMap() {
         map.updateFromRegion()
+        address = map.address
         latitude = map.latStr
         longitude = map.longStr
         map.fromLocationToAddress()

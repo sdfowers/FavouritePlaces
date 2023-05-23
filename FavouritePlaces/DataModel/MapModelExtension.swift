@@ -86,4 +86,14 @@ extension MapModel {
         delta = pow(10.0, zoom / c1 + c2)
         
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locations.last.map{ loc in
+            withAnimation {
+                region.center.latitude = loc.coordinate.latitude
+                region.center.longitude = loc.coordinate.longitude
+                print("lat: \(loc.coordinate.latitude), long: \(loc.coordinate.longitude)")
+            }
+        }
+    }
 }

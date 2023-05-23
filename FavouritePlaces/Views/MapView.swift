@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    //@StateObject var manager = LocManager()
     @ObservedObject var place: Place
     @ObservedObject var map: MapModel = .shared
     @State var zoom = 10.0
@@ -51,7 +52,7 @@ struct MapView: View {
                 }
             }
             ZStack {
-                Map(coordinateRegion: $map.region)
+                Map(coordinateRegion: $map.region, showsUserLocation: true)
                 VStack(alignment: .leading) {
                     Text("Latitude:\(map.region.center.latitude)").font(.footnote)
                     Text("Longitude:\(map.region.center.longitude)").font(.footnote)

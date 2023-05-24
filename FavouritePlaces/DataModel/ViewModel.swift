@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import MapKit
 import SwiftUI
 
 let defaultImage = Image(systemName: "photo").resizable()
@@ -63,6 +64,10 @@ extension Place {
             guard let url = URL(string: newValue) else {return}
             self.imageURL = url
         }
+    }
+    
+    var coord: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
     func getImage() async ->Image {

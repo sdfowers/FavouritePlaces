@@ -7,9 +7,11 @@
 
 import SwiftUI
 import MapKit
+import CoreData
 
 struct MapView: View {
     //@StateObject var manager = LocManager()
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var places:FetchedResults<Place>
     @ObservedObject var place: Place
     @ObservedObject var map: MapModel = .shared
     @State var zoom = 10.0
@@ -19,6 +21,17 @@ struct MapView: View {
     @State var isEditing = false
     var body: some View {
         VStack (alignment: .leading) {
+            HStack {
+                Text(place.strName).font(.title)
+                Spacer()
+                if isEditing {
+                    Image(systemName: "paperplane.circle.fill").foregroundColor(.blue)
+                        .onTapGesture {
+                            address = place.strName
+                            checkAddress()
+                        }
+                }
+            }
             HStack {
                 Text("Address")
                 if !isEditing {
@@ -52,7 +65,16 @@ struct MapView: View {
                 }
             }
             ZStack {
-                Map(coordinateRegion: $map.region, showsUserLocation: true)
+                Map(coordinateRegion: $map.region, annotationItems: places) {
+                    loc in
+                    MapAnnotation(coordinate: loc.coord) {
+                        NavigationLink(destination: DetailView(place: loc)) {
+                            Image(systemName: "paperplane.circle.fill").foregroundColor(.red)
+                            Text(loc.strName).fontWeight(.bold).foregroundColor(.red)
+                        }
+                        
+                    }
+                }
                 VStack(alignment: .leading) {
                     Text("Latitude:\(map.region.center.latitude)").font(.footnote)
                     Text("Longitude:\(map.region.center.longitude)").font(.footnote)
@@ -62,7 +84,7 @@ struct MapView: View {
                 }.offset(x: 10, y: 250)
             }
         }
-        .navigationTitle(place.strName)
+        //.navigationTitle(place.strName)
         .navigationBarItems(
             trailing: Button("\(isEditing ? "Confirm" : "Edit")") {
             if(isEditing) {

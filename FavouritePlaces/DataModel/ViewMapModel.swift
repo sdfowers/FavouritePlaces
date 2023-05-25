@@ -86,7 +86,7 @@ extension MapModel {
         delta = pow(10.0, zoom / c1 + c2)
         
     }
-    
+    /*
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locations.last.map{ loc in
             withAnimation {
@@ -96,4 +96,5 @@ extension MapModel {
             }
         }
     }
+    */
 }

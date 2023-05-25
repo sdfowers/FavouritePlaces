@@ -20,6 +20,7 @@ class MapModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     static let shared = MapModel()
     
+    /*
     let manager = CLLocationManager()
     override init() {
         super.init()
@@ -27,8 +28,6 @@ class MapModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
     }
-    
-    
-    
+    */
     
 }

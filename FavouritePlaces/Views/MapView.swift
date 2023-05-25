@@ -14,7 +14,8 @@ struct MapView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var places:FetchedResults<Place>
     @ObservedObject var place: Place
     @ObservedObject var map: MapModel = .shared
-    @State var zoom = 10.0
+    @State var mark:CLPlacemark?
+    @State var zoom = 30.0
     @State var address = ""
     @State var latitude = "0.0"
     @State var longitude = "0.0"
@@ -81,7 +82,11 @@ struct MapView: View {
                     Button("Update") {
                         checkMap()
                     }
-                }.offset(x: 10, y: 250)
+                }.offset(x: 10, y: 180)
+            }
+            
+            VStack {
+                //Text("Tide: \(mark?.sunrise ?? "")")
             }
         }
         //.navigationTitle(place.strName)
@@ -98,6 +103,8 @@ struct MapView: View {
         )
         .task {
             checkMap()
+            checkZoom()
+            //place.checkLocation(locInfoCB)
         }
         .onAppear {
             map.latitude = place.latitude
@@ -127,7 +134,6 @@ struct MapView: View {
     func checkZoom() {
         checkMap()
         map.fromZoomToDelta(zoom)
-        
         map.setupRegion()
     }
     func checkMap() {
@@ -140,5 +146,8 @@ struct MapView: View {
     func updateViewLocation() {
         latitude = map.latStr
         longitude = map.longStr
+    }
+    func locInfoCB(_ mk: CLPlacemark?) {
+        mark = mk
     }
 }

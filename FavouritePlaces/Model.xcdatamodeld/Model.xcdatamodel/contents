@@ -7,5 +7,8 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="sunriseTime" optional="YES" attributeType="String"/>
+        <attribute name="sunsetTime" optional="YES" attributeType="String"/>
+        <attribute name="timeZone" optional="YES" attributeType="String"/>
     </entity>
 </model>

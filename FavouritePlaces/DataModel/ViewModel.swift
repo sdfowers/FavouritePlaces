@@ -66,8 +66,22 @@ extension Place {
         }
     }
     
+    
     var coord: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    func checkLocation(_ cb: @escaping (CLPlacemark?)->Void) {
+        let coder = CLGeocoder()
+        coder.reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) {
+            marks, error in
+            if let err = error {
+                print("error in checkLocation \(err)")
+                return
+            }
+            let mark = marks?.first
+            cb(mark)
+        }
     }
     
     func getImage() async ->Image {

@@ -32,6 +32,9 @@ struct DetailView: View {
                     Text("\(details)").lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/).listRowBackground(Color.gray.opacity(0.05))
                     Text("Lattitude: \(latitude)").listRowBackground(Color.gray.opacity(0.05))
                     Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))
+                    place.timeZoneDisplay
+                    place.sunriseDisplay
+                    place.sunsetDisplay
                 }
             } else {
                 List {

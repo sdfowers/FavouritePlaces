@@ -23,18 +23,38 @@ struct DetailView: View {
         VStack {
             if !isEditing {
                 List {
-                    Text("\(name)").listRowBackground(Color.gray.opacity(0.05))
-                    image.scaledToFit().cornerRadius(10).listRowBackground(Color.gray.opacity(0.05))
+                    if image != defaultImage {
+                        image.scaledToFit().cornerRadius(10).listRowBackground(Color.gray.opacity(0.05))
+                    } else {
+                        image.frame(width: 40, height: 40).cornerRadius(5).listRowBackground(Color.gray.opacity(0.05))
+                    }
                     NavigationLink(destination: MapView(place: place)) {
+                        Image(systemName: "map.fill").foregroundColor(.blue)
                         Text("Map of \(name)")
                     }.listRowBackground(Color.gray.opacity(0.05))
-                    Text("\(address)").listRowBackground(Color.gray.opacity(0.05))
-                    Text("\(details)").lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/).listRowBackground(Color.gray.opacity(0.05))
-                    Text("Lattitude: \(latitude)").listRowBackground(Color.gray.opacity(0.05))
-                    Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))
-                    place.timeZoneDisplay
-                    place.sunriseDisplay
-                    place.sunsetDisplay
+                    if address != name {
+                        HStack {
+                            Image(systemName: "house.fill").foregroundColor(.blue)
+                            Text("\(address)")
+                        }.listRowBackground(Color.gray.opacity(0.05))
+                    }
+                    if details != "" {
+                        HStack {
+                            Image(systemName: "info.circle.fill").foregroundColor(.blue)
+                            Text("\(details)").lineLimit(/*@START_MENU_TOKEN@*/5/*@END_MENU_TOKEN@*/)
+                        }.listRowBackground(Color.gray.opacity(0.05))
+                    }
+                    HStack {
+                        Image(systemName: "globe.europe.africa.fill").foregroundColor(.blue)
+                        Text("Lattitude: \(latitude)").listRowBackground(Color.gray.opacity(0.05))
+                    }
+                    HStack {
+                        Image(systemName: "globe.asia.australia.fill").foregroundColor(.blue)
+                        Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))
+                    }
+                    place.timeZoneDisplay.listRowBackground(Color.gray.opacity(0.05))
+                    place.sunriseDisplay.listRowBackground(Color.gray.opacity(0.05))
+                    place.sunsetDisplay.listRowBackground(Color.gray.opacity(0.05))
                 }
             } else {
                 List {
@@ -107,6 +127,7 @@ struct DetailView: View {
             saveData()
         } */
         .task {
+            place.fetchTimeZone()
             await image = place.getImage()
         }
     }

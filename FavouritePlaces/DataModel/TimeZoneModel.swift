@@ -11,11 +11,11 @@ import SwiftUI
 struct MyTimeZone: Decodable {
     var timeZone:String
 }
-struct SunriseSunset : Codable {
+struct SunriseSunset: Codable {
     var sunrise:String
     var sunset:String
 }
-struct SunriseSunsetAPI : Codable {
+struct SunriseSunsetAPI: Codable {
     var results: SunriseSunset
     var status: String?
 }
@@ -45,7 +45,7 @@ extension Place {
     }
     var timeZoneDisplay: some View {
         HStack {
-            Image(systemName: "timer.square")
+            Image(systemName: "timer.square").foregroundColor(.blue)
             Text("Time Zone: ")
             if timeZoneStr != "" {
                 Text(timeZoneStr)
@@ -53,10 +53,11 @@ extension Place {
                 ProgressView()
             }
         }
+        
     }
     var sunriseDisplay: some View {
         HStack {
-            Image(systemName: "sunrise")
+            Image(systemName: "sunrise.fill").foregroundColor(.blue)
             Text(" Sunrise ")
             if sunriseStr != "" {
                 Text(sunriseStr)
@@ -64,10 +65,11 @@ extension Place {
                 ProgressView()
             }
         }
+        
     }
     var sunsetDisplay: some View {
         HStack {
-            Image(systemName: "sunset")
+            Image(systemName: "sunset.fill").foregroundColor(.blue)
             Text(" Sunset ")
             if sunsetStr != "" {
                 Text(sunsetStr)
@@ -75,9 +77,10 @@ extension Place {
                 ProgressView()
             }
         }
+        
     }
     func fetchTimeZone() {
-        let urlStr = "https://www.timeapi.io/api/TimeZone/coordinate?latitude=\(latitude)&longitude=\(longitude)"
+        let urlStr = "https://www.timeapi.io/api/TimeZone/coordinate?latitude=\(self.latitude)&longitude=\(self.longitude)"
         guard let url = URL(string: urlStr) else {
             return
         }

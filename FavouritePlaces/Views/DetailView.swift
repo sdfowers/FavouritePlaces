@@ -47,8 +47,8 @@ struct DetailView: View {
                         Image(systemName: "map.fill").foregroundColor(.blue)
                         Text("Map of \(name)")
                     }.listRowBackground(Color.gray.opacity(0.05))
-                    //If address not the same as name var, display to screen.
-                    if address != name {
+                    //Display address only if it isn't the same as or name or an empty string.
+                    if address != name && address != "" {
                         HStack {
                             Image(systemName: "house.fill").foregroundColor(.blue)
                             Text("\(address)")

@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import FavouritePlaces
+import CoreData
 
 final class FavouritePlacesTests: XCTestCase {
 
@@ -18,6 +19,23 @@ final class FavouritePlacesTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    /*
+    func testFetch() throws {
+        let ctx = PersistanceHandler.shared.container.viewContext
+        print("in testFetch")
+        let fetchRequest: NSFetchRequest<Place> = Place.fetchRequest()
+        XCTAssert(true)
+        let results:[Place]?
+        fetchRequest.entity = Place.entity()
+        //results = try? ctx.fetch(fetchRequest)
+
+        if let place = results?.first {
+            print(place.strName)
+            XCTAssert(place.name == "Brisbane")
+        }
+    }
+    */
+    
     func testLatStr() {
         let model = MapModel.shared
         model.latStr = "45"

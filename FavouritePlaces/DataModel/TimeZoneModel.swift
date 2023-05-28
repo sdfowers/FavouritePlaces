@@ -8,20 +8,26 @@
 import Foundation
 import SwiftUI
 
+/// MyTimeZone struct for decoding timeapi.io
 struct MyTimeZone: Decodable {
     var timeZone:String
 }
+
+/// SunriseSunset struct for encoding timeapi.io
 struct SunriseSunset: Codable {
     var sunrise:String
     var sunset:String
 }
+
+/// SunriseSunsetAPI for encoding timeapi.io
 struct SunriseSunsetAPI: Codable {
     var results: SunriseSunset
     var status: String?
 }
 
-
+/// Extensions of Place class for added methods, accessing timeapi.io
 extension Place {
+    //Get and set timeZone as a string coverting from the timeapi.io.
     var timeZoneStr:String {
         if let tz = timeZone {
             return tz
@@ -29,6 +35,8 @@ extension Place {
         fetchTimeZone()
         return ""
     }
+    
+    //Get and set sunrise as a string converting from the timeapi.io.
     var sunriseStr:String {
         if let sr = sunriseTime {
             let localTM = timeConvertFromGMTtoTimeZone(from: sr, to: self.timeZoneStr)
@@ -36,6 +44,8 @@ extension Place {
         }
         return ""
     }
+    
+    //Get and set sunset as a string coverting from timeapi.io.
     var sunsetStr:String {
         if let ss = sunsetTime {
             let localTM = timeConvertFromGMTtoTimeZone(from: ss, to: self.timeZoneStr)
@@ -43,6 +53,8 @@ extension Place {
         }
         return ""
     }
+    
+    //SwiftUI view of the timezone for easy adjustment.
     var timeZoneDisplay: some View {
         HStack {
             Image(systemName: "timer.square").foregroundColor(.blue)
@@ -50,11 +62,13 @@ extension Place {
             if timeZoneStr != "" {
                 Text(timeZoneStr)
             } else {
-                ProgressView()
+                ProgressView()      //If it cannot be loaded, display generic progressview
             }
         }
         
     }
+    
+    //SwiftUI view of the sunrise for easy adjustment.
     var sunriseDisplay: some View {
         HStack {
             Image(systemName: "sunrise.fill").foregroundColor(.blue)
@@ -62,11 +76,13 @@ extension Place {
             if sunriseStr != "" {
                 Text(sunriseStr)
             } else {
-                ProgressView()
+                ProgressView()      //If it cannot be loaded, display generic progressview
             }
         }
         
     }
+    
+    //SwiftUI view of the sunset for easy adjustment.
     var sunsetDisplay: some View {
         HStack {
             Image(systemName: "sunset.fill").foregroundColor(.blue)
@@ -74,11 +90,13 @@ extension Place {
             if sunsetStr != "" {
                 Text(sunsetStr)
             } else {
-                ProgressView()
+                ProgressView()      //If it cannot be loaded, display generic progressview
             }
         }
         
     }
+    
+    //Fetch the timezone of the current latitude and longitude through timeapi.io
     func fetchTimeZone() {
         let urlStr = "https://www.timeapi.io/api/TimeZone/coordinate?latitude=\(self.latitude)&longitude=\(self.longitude)"
         guard let url = URL(string: urlStr) else {
@@ -95,6 +113,8 @@ extension Place {
             }
         }.resume()
     }
+    
+    //Fetch the sunrise info of the current latitude and longitude through timeapi.io
     func fetchSunriseInfo() {
         let urlStr = "https://api.sunrise-sunset.org/json?lat=\(latitude)&lng=\(longitude)"
         guard let url = URL(string: urlStr) else {
@@ -115,6 +135,7 @@ extension Place {
     }
 }
 
+///Converts the GMT time to applicable timezone
 func timeConvertFromGMTtoTimeZone(from tm:String, to timezone:String) -> String {
     let inputFormater = DateFormatter()
     inputFormater.dateStyle = .none

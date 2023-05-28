@@ -9,7 +9,9 @@ import Foundation
 import CoreLocation
 import SwiftUI
 
+/// MapModel extensions for added functionality / methods
 extension MapModel {
+    //Get and set latitude as a string
     var latStr: String {
         get{String(format: "%.5f", latitude)}
         set{
@@ -17,6 +19,7 @@ extension MapModel {
             latitude = lat
         }
     }
+    //Get and set longitude as a string
     var longStr: String {
         get{String(format: "%.5f", longitude)}
         set{
@@ -26,11 +29,14 @@ extension MapModel {
         
     }
     
+    //Get longitude and latitude of current map region location
+    //Based on where the user is currently looking on the map.
     func updateFromRegion() {
         latitude = region.center.latitude
         longitude = region.center.longitude
     }
     
+    //upon loading the screen, user is brought to the saved location with some animation.
     func setupRegion() {
         withAnimation {
             region.center.latitude = latitude
@@ -40,6 +46,7 @@ extension MapModel {
         }
     }
     
+    //Gets the address of the current map location through current lat/long coordinates.
     func fromLocationToAddress() {
         let coder = CLGeocoder()
         coder.reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) {
@@ -53,6 +60,8 @@ extension MapModel {
             self.address = name
         }
     }
+    
+    //Gets the location based on the current address set by the user.
     func fromAddressToLocation () async {
         let encode = CLGeocoder()
         let marks = try? await encode.geocodeAddressString(self.address)
@@ -64,6 +73,8 @@ extension MapModel {
         }
     }
     
+    //Gets the location based on the current address set by the user.
+    //This version works with animated move to new location.
     func fromAddressToLocationOld(_ callback: @escaping () -> Void) {
         let encode = CLGeocoder()
         encode.geocodeAddressString(self.address) {
@@ -80,21 +91,11 @@ extension MapModel {
         }
     }
     
+    //Adjusts the user adjusted zoom level.
     func fromZoomToDelta(_ zoom: Double) {
         let c1 = -10.0
         let c2 = 3.0
         delta = pow(10.0, zoom / c1 + c2)
         
     }
-    /*
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locations.last.map{ loc in
-            withAnimation {
-                region.center.latitude = loc.coordinate.latitude
-                region.center.longitude = loc.coordinate.longitude
-                print("lat: \(loc.coordinate.latitude), long: \(loc.coordinate.longitude)")
-            }
-        }
-    }
-    */
 }

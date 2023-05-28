@@ -46,12 +46,12 @@ struct DetailView: View {
                     }
                     HStack {
                         Image(systemName: "globe.europe.africa.fill").foregroundColor(.blue)
-                        Text("Lattitude: \(latitude)").listRowBackground(Color.gray.opacity(0.05))
-                    }
+                        Text("Lattitude: \(latitude)")
+                    }.listRowBackground(Color.gray.opacity(0.05))
                     HStack {
                         Image(systemName: "globe.asia.australia.fill").foregroundColor(.blue)
-                        Text("Longitude: \(longitude)").listRowBackground(Color.gray.opacity(0.05))
-                    }
+                        Text("Longitude: \(longitude)")
+                    }.listRowBackground(Color.gray.opacity(0.05))
                     place.timeZoneDisplay.listRowBackground(Color.gray.opacity(0.05))
                     place.sunriseDisplay.listRowBackground(Color.gray.opacity(0.05))
                     place.sunsetDisplay.listRowBackground(Color.gray.opacity(0.05))

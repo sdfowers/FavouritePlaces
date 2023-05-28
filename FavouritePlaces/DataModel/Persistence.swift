@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+///Persistance Handler loads the coredata from the Model database.
 struct PersistanceHandler {
     static let shared = PersistanceHandler()
     let container : NSPersistentContainer

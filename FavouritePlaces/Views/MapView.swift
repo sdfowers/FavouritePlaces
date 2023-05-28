@@ -9,13 +9,26 @@ import SwiftUI
 import MapKit
 import CoreData
 
+///Map View utilises the MapModel and all its functionality to display an interactive map to the user.
+///The user can move the map, search for address, and search for given lat/long coordinates.
+///Upon entering this view, the map will try to adjust to find and view the place name if no exact address has been given.
+/// - Parameters
+///     - places : Array of Place Object
+///     - place : Place object
+///     - map : Map Object
+///     - mark : CLPlacemark
+///     - zoom: Double
+///     - address : String
+///     - latitude : String
+///     - longitude : String
+///     - isEditing : Boolean
 struct MapView: View {
     //@StateObject var manager = LocManager()
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)]) var places:FetchedResults<Place>
     @ObservedObject var place: Place
     @ObservedObject var map: MapModel = .shared
-    @State var mark:CLPlacemark?
-    @State var zoom = 30.0
+    @State var mark:CLPlacemark?        //For display placemarks on the map for each place.
+    @State var zoom = 30.0              //For adjusting the zoom level of the map.
     @State var address = ""
     @State var latitude = "0.0"
     @State var longitude = "0.0"
@@ -85,11 +98,7 @@ struct MapView: View {
                 }.offset(x: 10, y: 180)
             }
             
-            VStack {
-                //Text("Tide: \(mark?.sunrise ?? "")")
-            }
         }
-        //.navigationTitle(place.strName)
         .navigationBarItems(
             trailing: Button("\(isEditing ? "Confirm" : "Edit")") {
             if(isEditing) {
@@ -115,15 +124,10 @@ struct MapView: View {
         }
     }
     func checkAddress() {
+        //fromAddressToLocation and fromAddressToLocationOld both function and can be used.
+        //Old works with animation.
         map.address = address
         map.fromAddressToLocationOld(updateViewLocation)
-        /*
-        Task {
-            await map.fromAddressToLocation()
-            latitude = map.latStr
-            longitude = map.longStr
-        }
-        */
     }
     func checkLocation() {
         map.longStr = longitude

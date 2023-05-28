@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+///RowView displays the row seen in the contentview.
+///This is for displaying the small image and place name.
 struct RowView: View {
     @ObservedObject var place:Place
     @State var image = defaultImage

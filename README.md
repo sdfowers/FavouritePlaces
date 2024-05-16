@@ -8,6 +8,5 @@ I achieved a 7 on a scale of 1 to 7 (7 being the highest).
 If you would like to see the app working, please view the video below where I explain it and how it works.
 
 # Watch the Youtube video!
----
 
 [![Youtube Video of Favourite Places app.](https://img.youtube.com/vi/FuLl2UVMh_U/default.jpg)](https://youtu.be/FuLl2UVMh_U)
